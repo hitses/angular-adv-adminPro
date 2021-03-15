@@ -6,7 +6,17 @@
 }
 
 #themecolors {
-  .selector{
+  .selector {
     cursor: pointer;
   }
-} 
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+#google-btn {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}

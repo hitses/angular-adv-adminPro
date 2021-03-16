@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RegisterForm } from '../interfaces/registerForm.interfaces';
 import { LoginForm } from '../interfaces/loginForm.interface';
+import { User } from '../models/user.model';
 
 declare const gapi: any;
 
@@ -17,6 +18,7 @@ const url = environment.baseUrl;
 })
 export class UserService {
   public auth2: any;
+  public user: User;
 
   constructor(
     private http: HttpClient,
@@ -34,6 +36,9 @@ export class UserService {
       }
     }).pipe(
       tap((resp: any) => {
+        const {email, google, id, img, name, role} = resp.user;
+        this.user = new User(name, email, '', img, google, role, id);
+
         localStorage.setItem('token', resp.token);
       }),
       map(resp => true),

@@ -28,11 +28,18 @@ export class UserService {
     this.googleInit();
   }
 
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  get userId(): string {
+    return this.user.id || '';
+  }
+
   validateToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
     return this.http.get(`${url}/login/renew`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
     }).pipe(
       map((resp: any) => {
@@ -53,6 +60,18 @@ export class UserService {
         localStorage.setItem('token', resp.token);
       })
     );
+  }
+
+  updateUserProfile(data: {name: string, email: string, role: string}) {
+    data = {
+      ...data,
+      role: this.user.role
+    };
+    return this.http.put(`${url}/users/${this.userId}`, data, {
+      headers: {
+        'x-token': this.token
+      }
+    });
   }
 
   loginUser(formData: LoginForm) {

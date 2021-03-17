@@ -48,6 +48,8 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadImage() {
-    this.fileUploadService.uploadPhoto(this.imageToUpload, 'users', this.user.id);
+    this.fileUploadService.uploadPhoto(this.imageToUpload, 'users', this.user.id).then(
+      img => this.user.img = img
+    );
   }
 }

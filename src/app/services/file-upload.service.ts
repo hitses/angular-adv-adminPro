@@ -19,14 +19,20 @@ export class FileUploadService {
       const url = `${baseUrl}/upload/${type}/${id}`;
       const formData = new FormData();
       formData.append('img', file);
-      /* const resp =  */
-      await fetch(url, {
+      const resp = await fetch(url, {
         method: 'PUT',
         headers: {
           'x-token': localStorage.getItem('token') || ''
         },
         body: formData
       });
+      const data = await resp.json();
+      if (data.name) {
+        return data.name;
+      } else {
+        console.log(data.msg);
+        return false;
+      }
     } catch (err) {
       console.log(err);
       return false;

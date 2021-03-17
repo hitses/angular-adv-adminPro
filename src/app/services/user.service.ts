@@ -35,13 +35,14 @@ export class UserService {
         'x-token': token
       }
     }).pipe(
-      tap((resp: any) => {
+      map((resp: any) => {
         const {email, google, id, img, name, role} = resp.user;
         this.user = new User(name, email, '', img, google, role, id);
 
         localStorage.setItem('token', resp.token);
+
+        return true;
       }),
-      map(resp => true),
       catchError(err => of(false))
     );
   }

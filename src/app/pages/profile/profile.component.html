@@ -53,7 +53,10 @@
         <h4 class="card-title">Avatar</h4>
         <h6 class="card-subtitle">User image</h6>
 
-        <img src="" alt="">
+        <div class="img-container text-center">
+          <img *ngIf="!imgTemp" [src]="user.imgUrl" alt="user.img" class="img-avatar">
+          <img *ngIf="imgTemp" [src]="imgTemp" alt="Possible Avatar" class="img-avatar">
+        </div>
 
         <input
           type="file"

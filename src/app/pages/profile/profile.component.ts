@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   public profileForm: FormGroup;
   public user: User;
   public imageToUpload: File;
+  public imgTemp: any;
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +46,17 @@ export class ProfileComponent implements OnInit {
 
   selectedImg(file: File) {
     this.imageToUpload = file;
+
+    if (!file) {
+      return this.imgTemp = null;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      this.imgTemp = reader.result;
+    };
   }
 
   uploadImage() {
